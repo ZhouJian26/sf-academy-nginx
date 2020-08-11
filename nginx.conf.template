@@ -13,13 +13,18 @@ http {
     server {
         listen 80;
 
-        location = / {
-            return 200;
+        location / {
+            proxy_pass $WEBAPPURL;
+            proxy_redirect off;
         }
-        
+
         location /v1/ {
             proxy_pass http://api_server:3000/v1/;
             proxy_redirect off;
+        }
+
+        location = /albcheck {
+            return 200;
         }
     }
 }
